@@ -1,0 +1,30 @@
+A. Cach dung code:
+
+1. pip install -r requirements.txt
+
+2. download ptbxl: https://physionet.org/static/published-projects/ptb-xl/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3.zip
+
+3. doi ten thanh "ptb-xl" roi cho vao folder "run-task"
+
+4. chay code de get label tuong ung voi tung folder trong 21 folder cua ptbxl, vi du o day la folder "04000":
+python prepare_ptbxl_data.py -i ptb-xl/records100/04000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o trainfolder04000
+
+python prepare_ptbxl_data.py -i ptb-xl/records100/05000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o testfolder05000
+
+5. train model:
+python train_model.py -d trainfolder04000 -m model -v
+
+6. run model:
+python run_model.py -d testfolder05000 -m model -o test_output05000
+
+7. copy 2 folder "testfolder05000" va "test_output05000" vao trong "evaluate-task"
+
+8. python evaluate_model.py -d testfolder05000 -o test_output05000 -s scores.csv
+
+
+B. Cach edit code:
+
+1. Edit preprocessing gaussion trong file "nhat_modifysignal.py"
+2. Edit model o trong file "team_code.py"
+3. Cach generate file 50normal50abnormal: extract_50n50a_only = True trong file "team_code.py". Cach hoat dong la van chay "python train_model.py -d trainfolder04000 -m model -v" va se select ra 50normal50abnormal va save subfolder trong folder "trainfolder04000", sau do dua subfolder do ra ngoai va tiep tuc generate virtual nhu ben duoi.
+4. Cach generate virtual tu gaussian functio: generate_virtual = True trong file "team_code.py". Cach hoat dong la chay "python train_model.py -d "subfolder vua copy ra o tren" -m model -v" va code se generate ra theo function trong "nhat_modifysignal.py", index generate file la 1->101->201->301->401->501. Sau do lai co 1 subfolder nua duoc tao ra ben trong. Sau do mang subfolder do ra ngoai tiep va chay train model, run model roi evaluate nhu binh thuong.
