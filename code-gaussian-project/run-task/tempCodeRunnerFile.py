@@ -1,1 +1,0 @@
-np.random.randint(0, 2)
