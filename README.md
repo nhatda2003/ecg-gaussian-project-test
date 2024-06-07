@@ -1,1 +1,0 @@
-# ecg-gaussian-project-test
