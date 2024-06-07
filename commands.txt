@@ -1,0 +1,16 @@
+python train_model.py -d trainfolder04000 -m model -n model_name -v
+
+python run_model.py -d testfolder05000 -m model -mn model_name -o test_output05000
+
+python evaluate_model.py -d testfolder01000npy -o test_foldertrain04000test01000 -s scores.csv
+
+python prepare_ptbxl_data.py -i ptb-xl/records100/04000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o trainfolder04000
+
+python generate_gaussianset.py -d generatedfrom08000 -s gaussianset_5pt
+
+python extract_smallset.py -d testfolder08000npy -s generatedfrom08000
+
+
+git remote add origin https://github.com/nhatda2003/ecg-gaussian-project-test
+
+
