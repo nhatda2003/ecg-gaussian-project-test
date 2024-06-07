@@ -1,5 +1,8 @@
 Chay theo thu tu sau:
 
+Tai ptbxl va doi ten thanh ptb-xl:
+https://physionet.org/static/published-projects/ptb-xl/ptb-xl-a-large-publicly-available-electrocardiography-dataset-1.0.3.zip
+
 python prepare_ptbxl_data.py -i ptb-xl/records100/04000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o trainfolder04000
 
 python prepare_ptbxl_data.py -i ptb-xl/records100/05000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o testfolder05000
