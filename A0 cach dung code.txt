@@ -1,0 +1,31 @@
+Chay theo thu tu sau:
+
+python prepare_ptbxl_data.py -i ptb-xl/records100/04000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o trainfolder04000
+
+python prepare_ptbxl_data.py -i ptb-xl/records100/05000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o testfolder05000
+
+python train_model.py -d trainfolder04000 -m model -n model_name -v
+
+python run_model.py -d testfolder05000 -m model -mn model_name -o test_output05000
+
+python evaluate_model.py -d testfolder05000 -o test_output05000 -s scores.csv
+
+
+
+
+
+
+Neu muon dung gaussian:
+
+python prepare_ptbxl_data.py -i ptb-xl/records100/06000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o testfolder06000
+
+python extract_smallset.py -d testfolder06000 -s generatedfrom06000
+
+python generate_gaussianset.py -d generatedfrom06000 -s gaussian_trainset
+
+python train_model.py -d gaussian_trainset -m model -n model_name_withgaussian -v
+
+python run_model.py -d testfolder05000 -m model -mn model_name_withgaussian -o test_output05000_withgaussian
+
+python evaluate_model.py -d testfolder05000 -o test_output05000_withgaussian -s scores.csv
+
