@@ -9,6 +9,7 @@ def get_parser():
     description = 'Train the Challenge model(s).'
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('-d', '--data_folder', type=str, required=True)
+    parser.add_argument('-vl', '--validation_folder', type=str, required=True)
     parser.add_argument('-m', '--model_folder', type=str, required=True)
     parser.add_argument('-n','--model_scenario_name',type=str, required=True)
     parser.add_argument('-v', '--verbose', action='store_true')
@@ -19,7 +20,7 @@ def run(args):
     print("ASDASd")
     #NHATedit 
     print(args.data_folder)
-    train_dx_model(args.data_folder, args.model_folder, args.model_scenario_name, args.verbose) ### Teams: Implement this function!!!
+    train_dx_model(args.data_folder, args.validation_folder, args.model_folder, args.model_scenario_name, args.verbose) ### Teams: Implement this function!!!
   
 
 if __name__ == '__main__':

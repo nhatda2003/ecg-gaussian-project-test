@@ -15,7 +15,8 @@ def find_records(folder):
                 if filetype == 'label':
                     #print(filetype)
                     parts = file[:-4].split('_')  # Split the filename by underscore
-                    record = '_'.join(parts[:2])  # Join the first two parts with underscore
+                    file_record = '_'.join(parts[:2])  # Join the first two parts with underscore
+                    record = os.path.relpath(os.path.join(root, file_record), folder)
                     records.add(record)
                     #print(record)
                     #print("???")

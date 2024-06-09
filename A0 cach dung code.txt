@@ -5,9 +5,11 @@ https://physionet.org/static/published-projects/ptb-xl/ptb-xl-a-large-publicly-a
 
 python prepare_ptbxl_data.py -i ptb-xl/records100/04000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o trainfolder04000
 
+python prepare_ptbxl_data.py -i ptb-xl/records100/01000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o validationfolder01000
+
 python prepare_ptbxl_data.py -i ptb-xl/records100/05000 -d  ptb-xl/ptbxl_database.csv -s  ptb-xl/scp_statements.csv -o testfolder05000
 
-python train_model.py -d trainfolder04000 -m model -n model_name -v
+python train_model.py -d trainfolder04000 -vl validationfolder01000 -m model -n model_name -v
 
 python run_model.py -d testfolder05000 -m model -mn model_name -o test_output05000
 
