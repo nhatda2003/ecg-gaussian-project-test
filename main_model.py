@@ -182,7 +182,7 @@ class LeNet5(nn.Module):
 
 model = LeNet5(num_classes=2)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 
 
@@ -221,7 +221,7 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     #Set to train
     # model.train()
 
-    num_epochs = 20
+    num_epochs = 50
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -321,20 +321,22 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     plt.title('Plot of Train and Validation Metrics')
     plt.legend()  # Show legend to distinguish between train and validation data
 
-    # Annotate each point with its y-value
-    for i in range(num_epochs):
-        plt.annotate(f'{train_loss_data[i]:.2f}', (i+1, train_loss_data[i]), textcoords="offset points", xytext=(0,10), ha='center')
-        plt.annotate(f'{train_accuracy_data[i]:.2f}', (i+1, train_accuracy_data[i]), textcoords="offset points", xytext=(0,10), ha='center')
-        plt.annotate(f'{validation_accuracy_data[i]:.2f}', (i+1, validation_accuracy_data[i]), textcoords="offset points", xytext=(0,10), ha='center')
+
+    # Find the 5 highest validation accuracy values and their corresponding epochs
+    top_values = sorted(((acc, epoch) for epoch, acc in enumerate(validation_accuracy_data, start=1)), reverse=True)[:5]
+
+    # Annotate the plot with the top 5 values
+    for acc, epoch in top_values:
+        plt.annotate(f'{acc:.2f}', (epoch, acc), textcoords="offset points", xytext=(-10,10), ha='center')
 
     # Save the plot
-    plt.savefig(f'train_validation_plot_{num_epochs}.png')  # Specify the file name and extension
+    plt.savefig(f'train_validation_plot_datafolder_{data_folder}_{num_epochs}ep_{num_validation_records}val_{num_records}train.png')  # Specify the file name and extension
     plt.show()
     
     # Save the data of train, validation
-    np.save(f'{num_epochs} {num_validation_records} {num_records} train_loss_data.npy', train_loss_data)
-    np.save(f'{num_epochs} {num_validation_records} {num_records} train_accuracy_data.npy', train_accuracy_data)
-    np.save(f'{num_epochs} {num_validation_records} {num_records} validation_accuracy_data.npy', validation_accuracy_data)
+    np.save(f'{data_folder} {num_epochs} {num_validation_records} {num_records} train_loss_data.npy', train_loss_data)
+    np.save(f'{data_folder} {num_epochs} {num_validation_records} {num_records} train_accuracy_data.npy', train_accuracy_data)
+    np.save(f'{data_folder} {num_epochs} {num_validation_records} {num_records} validation_accuracy_data.npy', validation_accuracy_data)
 
 
 

@@ -50,6 +50,8 @@ def evaluate_model(label_folder, output_folder, extra_scores=False):
             output_dxs.append(output_dx)
             
     #Some text to put in scores.csv
+    print(label_dxs.count(['Normal']))
+    print(label_dxs.count(['Abnormal']))
     moretex = f"{label_dxs.count(['Normal'])} Normal in data \n {output_dxs.count(['Normal'])} Normal in predict \n {label_dxs.count(['Abnormal'])} Abnormal in data \n {output_dxs.count(['Abnormal'])}  Abnormal in predict\n Ratio in data:      {int(round(label_dxs.count(['Normal'])/len(label_dxs),2)*100)} Normal : {int(round(label_dxs.count(['Abnormal'])/len(label_dxs),2)*100)} Abnormal\n"
 
 

@@ -13,7 +13,7 @@ python train_model.py -d trainfolder04000 -vl validationfolder01000 -m model -n 
 
 python run_model.py -d testfolder05000 -m model -mn model_name -o test_output05000
 
-python evaluate_model.py -d testfolder05000 -o test_output05000 -s scores.csv
+python evaluate_model.py -d testfolder05000 -o test_output05000_model_name -s scores.csv
 
 
 

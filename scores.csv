@@ -1019,3 +1019,71 @@
 
  Perclass_f_measure [Normal  Abnormal]: [0.50653983 0.64131374] 
  F-measure: 0.574
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: testfolder050002000021000
+ Output folder: test_output050002000021000 
+ 16:56, 09, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1034 Normal in data 
+ 2327 Normal in predict 
+ 1803 Abnormal in data 
+ 510  Abnormal in predict
+ Ratio in data:      36 Normal : 64 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.35142756 0.16672541] 
+ All accuracy: 0.518 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.59327581 0.40899265] 
+ F-measure: 0.501
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: extracted1200n1200atest
+ Output folder: test_output_extracted1200n1200a 
+ 16:59, 09, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1034 Normal in data 
+ 1895 Normal in predict 
+ 1200 Abnormal in data 
+ 339  Abnormal in predict
+ Ratio in data:      46 Normal : 54 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.44628469 0.13518353] 
+ All accuracy: 0.581 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.68077842 0.39246264] 
+ F-measure: 0.537
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: extracted1200n1200atest
+ Output folder: test_output_extracted1200n1200a 
+ 17:12, 09, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1034 Normal in data 
+ 1895 Normal in predict 
+ 1200 Abnormal in data 
+ 339  Abnormal in predict
+ Ratio in data:      46 Normal : 54 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.44628469 0.13518353] 
+ All accuracy: 0.581 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.68077842 0.39246264] 
+ F-measure: 0.537
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: extracted1000n1000atest
+ Output folder: test_output_extracted1000n1000a 
+ 17:15, 09, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1000 Normal in data 
+ 1713 Normal in predict 
+ 1000 Abnormal in data 
+ 287  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.482  0.1255] 
+ All accuracy: 0.607 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.71065241 0.39005439] 
+ F-measure: 0.550

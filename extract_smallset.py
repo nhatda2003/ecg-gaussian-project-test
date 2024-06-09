@@ -25,7 +25,7 @@ def run(args):
     num_records = len(records)
     width = len(str(num_records))
     
-    num_save = 100
+    num_save = 2000
 
     if num_records == 0:
         raise FileNotFoundError('No data was provided.')

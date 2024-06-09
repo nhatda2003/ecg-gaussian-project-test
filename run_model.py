@@ -53,7 +53,7 @@ def run(args):
         raise Exception('No data were provided.')
 
     # Create a folder for the Challenge outputs if it does not already exist.
-    os.makedirs(args.output_folder, exist_ok=True)
+    os.makedirs(f"{args.output_folder}_{args.model_name}", exist_ok=True)
 
     # Run the team's model(s) on the Challenge data.
     if args.verbose:
