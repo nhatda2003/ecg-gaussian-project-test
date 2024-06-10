@@ -53,7 +53,8 @@ def run(args):
         raise Exception('No data were provided.')
 
     # Create a folder for the Challenge outputs if it does not already exist.
-    os.makedirs(f"{args.output_folder}_{args.model_name}", exist_ok=True)
+    args.output_folder = f"{args.output_folder}_{args.model_name}"
+    os.makedirs(f"{args.output_folder}", exist_ok=True)
 
     # Run the team's model(s) on the Challenge data.
     if args.verbose:
@@ -84,7 +85,7 @@ def run(args):
         
         #Save the predicted label
         output_path = os.path.split(output_record)[0]
-        print(output_path)
+        #print(output_path)
         os.makedirs(output_path, exist_ok=True)
         pickle.dump(dx, open(output_record+'_label.npy', 'wb'), protocol=4)
 
