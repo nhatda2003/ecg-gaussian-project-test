@@ -25,8 +25,10 @@ def run(args):
     num_records = len(records)
     width = len(str(num_records))
     
-    num_save = 2000
-
+    #Set before generate
+    num_sets = 1
+    num_save = 1000
+    
     if num_records == 0:
         raise FileNotFoundError('No data was provided.')
 
@@ -34,6 +36,7 @@ def run(args):
 
     counter_save_n = 0
     counter_save_a = 0
+    counter_sets = 0
         
 
     for i in range(num_records):
@@ -42,9 +45,8 @@ def run(args):
         dx = load_dx(record) #NHATnote: Doan nay lay ra label Normal/ Abnormal
         print(dx, "dx")
         #print(record)
-        if counter_save_n +  counter_save_a < num_save:
-            
-            
+        if counter_save_n +  counter_save_a < num_save and counter_sets < num_sets:
+
             if dx == ['Normal'] and counter_save_n<(num_save//2):
              
                 counter_save_n +=1
@@ -53,7 +55,7 @@ def run(args):
                 record_hea = os.path.join(data_folder, records[i] + "_label.npy")
                 subfolder_name = args.extract_folder
                 # Create the subfolder if it doesn't exist
-                subfolder_path = os.path.join(os.getcwd(), subfolder_name)
+                subfolder_path = os.path.join(os.getcwd(), subfolder_name+f"set{counter_sets+1}")
                 
                 if not os.path.exists(subfolder_path):
                     os.makedirs(subfolder_path)
@@ -80,7 +82,7 @@ def run(args):
                 record_hea = os.path.join(data_folder, records[i] + "_label.npy")
                 subfolder_name = args.extract_folder
                 # Create the subfolder if it doesn't exist
-                subfolder_path = os.path.join(os.getcwd(), subfolder_name)
+                subfolder_path = os.path.join(os.getcwd(), subfolder_name+f"set{counter_sets+1}")
                 
                 if not os.path.exists(subfolder_path):
                     os.makedirs(subfolder_path)
@@ -102,11 +104,15 @@ def run(args):
                 # change_file_name_in_hea_file(hea_file_path, new_file_name)
 
                 
+        elif counter_sets<num_sets:
+            counter_sets += 1
+            counter_save_n = 0
+            counter_save_a = 0
         else:
-            print(f"Finished save {num_save} files as smallset")
+            print(f"Finished save {num_save*num_sets} files as small set(s)")
             print(f"Original folder is {data_folder}")
             return
-            
+                
 
         
 # Parse arguments.
