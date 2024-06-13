@@ -49,7 +49,7 @@ def load_header(record):
 
 #NHATedit modify to read each file at once
 def load_raw_data_ptbxl(sampling_rate, path):
-    print("path in load_raw_data_ptbxl:", path)
+    #print("path in load_raw_data_ptbxl:", path)
     if sampling_rate == 100:
         #if os.path.exists(path + '_raw100.npy'):
         data = np.load(path+'_raw100.npy', allow_pickle=True)

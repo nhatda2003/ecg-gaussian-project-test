@@ -17,6 +17,8 @@ import numpy as np
 from nhat_modifysignal import *
 from datetime import datetime
 
+from tqdm import tqdm
+
 
 import torch
 import torch.nn as nn
@@ -210,8 +212,8 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
         raise FileNotFoundError('No data was provided.')
 
     # Extract the features and labels.
-    if verbose:
-        print('Extracting features and labels from the data...')
+    #if verbose:
+        #print('Extracting features and labels...')
         
     #Plot loss, accuracy by epochs
     train_loss_data = []
@@ -221,47 +223,52 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     #Set to train
     # model.train()
 
-    num_epochs = 30 #Tested to be stable
+    num_epochs = 30  # Tested to be stable
+
+    # Outer loop for epochs
     for epoch in range(num_epochs):
-        #train
+        # Train
         model.train()
         running_loss = 0.0
         correct = 0
         total = 0
-        for i in range(num_records):
-            if verbose:
-                width = len(str(num_records))
-                print(f'- {i+1:>{width}}/{num_records}: {records[i]}...')
 
-            record = os.path.join(data_folder, records[i])
-            print(record)
- 
-            #SIGNAL and label load
-            signal, label = load_raw_data_ptbxl(100,record) #dang la lay lead 1, hoac lead 2 -> clear hon
-            print("label loaded:", label)
+        # Use tqdm for progress bar
+        print(f"{model_scenario_name} {data_folder} {validation_folder}")
+        print(f"Epoch {epoch+1}/{num_epochs}")
+        with tqdm(total=num_records, desc="Trainning", unit=" record") as pbar:
+            for i in range(num_records):
+                pbar.update(1)  # Update progress bar
+                record = os.path.join(data_folder, records[i])
+                #print(record)
+    
+                #SIGNAL and label load
+                signal, label = load_raw_data_ptbxl(100,record) #dang la lay lead 1, hoac lead 2 -> clear hon
+                #print("label loaded:", label)
 
-            #Prepare
-            signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
-            #print(signal_tensor.shape)
-            #raise Exception("???")
-            label_tensor = torch.tensor(label, dtype=torch.long)
-           
-            optimizer.zero_grad()
-            outputs = model(signal_tensor)
-            loss = criterion(outputs, label_tensor.unsqueeze(0))  # Add batch dimension to target for the loss function
-            loss.backward()
-            optimizer.step()
+                #Prepare
+                signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
+                label_tensor = torch.tensor(label, dtype=torch.long)
             
-            running_loss += loss.item()
-            print(outputs, "output")
-            _, predicted = torch.max(outputs, 1)
-            print(predicted," predictedss")
-            total += 1
-            correct += (predicted == label_tensor).sum().item()
-            print(f"Epoch {epoch+1}/{num_epochs}") 
-            print(f"Running_loss: {(running_loss / total):.4f}, Running_accuracy: {(correct / total):.4f}")
-
+                optimizer.zero_grad()
+                outputs = model(signal_tensor)
+                loss = criterion(outputs, label_tensor.unsqueeze(0))  # Add batch dimension to target for the loss function
+                loss.backward()
+                optimizer.step()
+                
+                running_loss += loss.item()
+                #print(outputs, "output")
+                _, predicted = torch.max(outputs, 1)
+                #print(predicted," predictedss")
+                total += 1
+                correct += (predicted == label_tensor).sum().item()
             
+
+        #print(f"Epoch {epoch+1}/{num_epochs}") 
+        
+        Running_accuracy = correct / total
+        #print(f"Running_accuracy: {(correct / total):.4f}")
+
         epoch_loss = running_loss / total
         epoch_acc = correct / total
         train_loss_data.append(epoch_loss)
@@ -271,31 +278,33 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
         model.eval()
         correct = 0
         total = 0
-        with torch.no_grad():
-            for i in range(num_validation_records):
-                if verbose:
-                    width = len(str(num_validation_records))
-                    print("Validating...")
-                    print(f'- {i+1:>{width}}/{num_validation_records}: {validation_records[i]}...')
 
-                validation_record = os.path.join(validation_folder, validation_records[i])
-                print(validation_record)
-    
-                #SIGNAL and label load
-                signal, label = load_raw_data_ptbxl(100,validation_record) #dang la lay lead 1, hoac lead 2 -> clear hon
-                print("Validation label loaded:", label)
-                
-                signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
-                label_tensor = torch.tensor(label, dtype=torch.long)
-                outputs = model(signal_tensor)
-                
-                _, predicted = torch.max(outputs, 1)
-                print(predicted," validation predicted")
-                total += 1
-                correct += (predicted == label_tensor).sum().item()    
+        # Use tqdm for progress bar
+        with torch.no_grad():
+            with tqdm(total=num_validation_records, desc="Validation", unit=" record") as pbar:
+                for i in range(num_validation_records):
+                    pbar.update(1)  # Update progress bar
+                    validation_record = os.path.join(validation_folder, validation_records[i])
+                    #print(validation_record)
+        
+                    #SIGNAL and label load
+                    signal, label = load_raw_data_ptbxl(100,validation_record) #dang la lay lead 1, hoac lead 2 -> clear hon
+                    #print("Validation label loaded:", label)
+                    
+                    signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
+                    label_tensor = torch.tensor(label, dtype=torch.long)
+                    outputs = model(signal_tensor)
+                    
+                    _, predicted = torch.max(outputs, 1)
+                    #print(predicted," validation predicted")
+                    total += 1
+                    correct += (predicted == label_tensor).sum().item()    
         val_acc = correct / total
         validation_accuracy_data.append(val_acc)
+        print(f"Train_loss: {(running_loss / total):.4f}")
+        print(f"Train_accuracy: {Running_accuracy:.4f}")
         print(f"Validation Accuracy: {val_acc:.4f}")
+        print()
         
     os.makedirs(model_folder, exist_ok=True)
     
@@ -332,7 +341,7 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
 
     # Save the plot
     plt.savefig(f'plot_{model_name}_{data_folder}_{num_epochs}ep_{num_validation_records}val_{num_records}train.png')  # Specify the file name and extension
-    plt.show()
+    #plt.show()
     
     # Save the data of train, validation
     # np.save(f'{model_name} {data_folder} {num_epochs} {num_validation_records} {num_records} train_loss_data.npy', train_loss_data)
