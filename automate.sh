@@ -46,11 +46,21 @@ run_and_evaluate() {
 # Associative array to map training data to model names
 declare -A model_names=(
     
-    ["50n50aset2"]="lenet5-50n50aset2"
-    ["50n50aset3"]="lenet5-50n50aset3"
-    #["50n50aset4"]="lenet5-50n50aset4"
-    #["2500n2500atrainset1"]="lenet5-2500n2500atrainset1"
-    #["50n50aset1"]="lenet5-50n50aset1"
+    # ["50n50aset2"]="lenet5-50n50aset2"
+    # ["50n50aset3"]="lenet5-50n50aset3"
+    # ["50n50aset4"]="lenet5-50n50aset4"
+    # ["2500n2500atrainset1"]="lenet5-2500n2500atrainset1"
+    # ["50n50aset1"]="lenet5-50n50aset1"
+    # ["50n50aset5"]="lenet5-50n50aset5"
+    # ["50n50aset6"]="lenet5-50n50aset6"
+
+    ["50n50aset2"]="resnet50-50n50aset2"
+    ["50n50aset3"]="resnet50-50n50aset3"
+    ["50n50aset4"]="resnet50-50n50aset4"
+    ["2500n2500atrainset1"]="resnet50-2500n2500atrainset1"
+    ["50n50aset1"]="resnet50-50n50aset1"
+    ["50n50aset5"]="resnet50-50n50aset5"
+    ["50n50aset6"]="resnet50-50n50aset6"
 )
 
 # List of data folders for testing

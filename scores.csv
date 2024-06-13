@@ -765,3 +765,360 @@
 
  Perclass_f_measure [Normal  Abnormal]: [0.41619586 0.54744526] 
  F-measure: 0.482
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-2500n2500atrainset1 
+ 14:38, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1547 Normal in predict 
+ 1500 Abnormal in data 
+ 1453  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.34766667 0.332     ] 
+ All accuracy: 0.680 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.68460781 0.67456824] 
+ F-measure: 0.680
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset1 
+ 14:38, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1126 Normal in predict 
+ 1500 Abnormal in data 
+ 1874  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.18933333 0.314     ] 
+ All accuracy: 0.503 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.43259711 0.55838767] 
+ F-measure: 0.495
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset2 
+ 14:38, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 3000  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.  0.5] 
+ All accuracy: 0.500 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.         0.66666667] 
+ F-measure: 0.333
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset3 
+ 14:38, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1618 Normal in predict 
+ 1500 Abnormal in data 
+ 1382  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.27133333 0.232     ] 
+ All accuracy: 0.503 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.52212957 0.48299792] 
+ F-measure: 0.503
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset4 
+ 14:39, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 3000  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.  0.5] 
+ All accuracy: 0.500 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.         0.66666667] 
+ F-measure: 0.333
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset5 
+ 14:39, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1396 Normal in predict 
+ 1500 Abnormal in data 
+ 1604  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.232      0.26666667] 
+ All accuracy: 0.499 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.48066298 0.51546392] 
+ F-measure: 0.498
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset1
+ Output folder: test_output1500n1500atestset1-lenet5-50n50aset6 
+ 14:39, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1482 Normal in predict 
+ 1500 Abnormal in data 
+ 1518  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.232 0.238] 
+ All accuracy: 0.470 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.4668008  0.47316103] 
+ F-measure: 0.470
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-2500n2500atrainset1 
+ 14:39, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1496 Normal in predict 
+ 1500 Abnormal in data 
+ 1504  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.35266667 0.354     ] 
+ All accuracy: 0.707 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.70627503 0.70705726] 
+ F-measure: 0.707
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset1 
+ 14:39, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1097 Normal in predict 
+ 1500 Abnormal in data 
+ 1903  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.19166667 0.326     ] 
+ All accuracy: 0.518 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.44281864 0.57478695] 
+ F-measure: 0.509
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset2 
+ 14:40, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 3000  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.  0.5] 
+ All accuracy: 0.500 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.         0.66666667] 
+ F-measure: 0.333
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset3 
+ 14:40, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1588 Normal in predict 
+ 1500 Abnormal in data 
+ 1412  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.26066667 0.23133333] 
+ All accuracy: 0.492 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.50647668 0.47664835] 
+ F-measure: 0.492
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset4 
+ 14:40, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 3000  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.  0.5] 
+ All accuracy: 0.500 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.         0.66666667] 
+ F-measure: 0.333
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset5 
+ 14:40, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1397 Normal in predict 
+ 1500 Abnormal in data 
+ 1603  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.23666667 0.271     ] 
+ All accuracy: 0.508 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.49016224 0.52400902] 
+ F-measure: 0.507
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset2
+ Output folder: test_output1500n1500atestset2-lenet5-50n50aset6 
+ 14:40, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 1500 Normal in data 
+ 1476 Normal in predict 
+ 1500 Abnormal in data 
+ 1524  Abnormal in predict
+ Ratio in data:      50 Normal : 50 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.25833333 0.26633333] 
+ All accuracy: 0.525 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.52083333 0.52843915] 
+ F-measure: 0.525
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-2500n2500atrainset1 
+ 14:41, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 1063 Normal in predict 
+ 1500 Abnormal in data 
+ 1369  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.25287829 0.43256579] 
+ All accuracy: 0.685 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.61654135 0.73335657] 
+ F-measure: 0.675
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset1 
+ 14:41, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 918 Normal in predict 
+ 1500 Abnormal in data 
+ 1514  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.14679276 0.38610197] 
+ All accuracy: 0.533 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.38594595 0.62309224] 
+ F-measure: 0.505
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset2 
+ 14:41, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 2432  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.         0.61677632] 
+ All accuracy: 0.617 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.        0.7629705] 
+ F-measure: 0.381
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset3 
+ 14:41, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 1246 Normal in predict 
+ 1500 Abnormal in data 
+ 1186  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.19819079 0.30263158] 
+ All accuracy: 0.501 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.4426079  0.54802681] 
+ F-measure: 0.495
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset4 
+ 14:41, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 0 Normal in predict 
+ 1500 Abnormal in data 
+ 2432  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.         0.61677632] 
+ All accuracy: 0.617 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.        0.7629705] 
+ F-measure: 0.381
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset5 
+ 14:42, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 1137 Normal in predict 
+ 1500 Abnormal in data 
+ 1295  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.17722039 0.32648026] 
+ All accuracy: 0.504 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.41662639 0.56815742] 
+ F-measure: 0.492
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ Label folder: 1500n1500atestset3
+ Output folder: test_output1500n1500atestset3-lenet5-50n50aset6 
+ 14:42, 13, June 
+ Classes: ['Normal', 'Abnormal'] 
+
+ 932 Normal in data 
+ 1226 Normal in predict 
+ 1500 Abnormal in data 
+ 1206  Abnormal in predict
+ Ratio in data:      38 Normal : 62 Abnormal
+ 
+ Per_class_accuracy [Normal  Abnormal]: [0.19654605 0.30921053] 
+ All accuracy: 0.506 
+
+ Perclass_f_measure [Normal  Abnormal]: [0.44300278 0.55580192] 
+ F-measure: 0.499
