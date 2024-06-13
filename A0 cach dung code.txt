@@ -1,3 +1,9 @@
+update 13/6:
+Edit all trong file automate.sh
+
+
+Hoac la:
+
 Chay theo thu tu sau:
 
 Tai ptbxl va doi ten thanh ptb-xl:
