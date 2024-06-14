@@ -30,82 +30,82 @@ from torchvision import models
 
 
 #Resnet50
-class Bottlrneck(torch.nn.Module):
-    def __init__(self,In_channel,Med_channel,Out_channel,downsample=False):
-        super(Bottlrneck, self).__init__()
-        self.stride = 1
-        if downsample == True:
-            self.stride = 2
+# class Bottlrneck(torch.nn.Module):
+#     def __init__(self,In_channel,Med_channel,Out_channel,downsample=False):
+#         super(Bottlrneck, self).__init__()
+#         self.stride = 1
+#         if downsample == True:
+#             self.stride = 2
 
-        self.layer = torch.nn.Sequential(
-            torch.nn.Conv1d(In_channel, Med_channel, 1, self.stride),
-            torch.nn.BatchNorm1d(Med_channel),
-            torch.nn.ReLU(),
-            torch.nn.Conv1d(Med_channel, Med_channel, 3, padding=1),
-            torch.nn.BatchNorm1d(Med_channel),
-            torch.nn.ReLU(),
-            torch.nn.Conv1d(Med_channel, Out_channel, 1),
-            torch.nn.BatchNorm1d(Out_channel),
-            torch.nn.ReLU(),
-        )
+#         self.layer = torch.nn.Sequential(
+#             torch.nn.Conv1d(In_channel, Med_channel, 1, self.stride),
+#             torch.nn.BatchNorm1d(Med_channel),
+#             torch.nn.ReLU(),
+#             torch.nn.Conv1d(Med_channel, Med_channel, 3, padding=1),
+#             torch.nn.BatchNorm1d(Med_channel),
+#             torch.nn.ReLU(),
+#             torch.nn.Conv1d(Med_channel, Out_channel, 1),
+#             torch.nn.BatchNorm1d(Out_channel),
+#             torch.nn.ReLU(),
+#         )
 
-        if In_channel != Out_channel:
-            self.res_layer = torch.nn.Conv1d(In_channel, Out_channel,1,self.stride)
-        else:
-            self.res_layer = None
+#         if In_channel != Out_channel:
+#             self.res_layer = torch.nn.Conv1d(In_channel, Out_channel,1,self.stride)
+#         else:
+#             self.res_layer = None
 
-    def forward(self,x):
-        if self.res_layer is not None:
-            residual = self.res_layer(x)
-        else:
-            residual = x
-        return self.layer(x)+residual
-
-
-class ResNet50(torch.nn.Module):
-    def __init__(self,in_channels=2,classes=125):
-        super(ResNet50, self).__init__()
-        self.features = torch.nn.Sequential(
-            torch.nn.Conv1d(in_channels,64,kernel_size=5,stride=1,padding=3),
-            torch.nn.MaxPool1d(3,2,1),
-
-            Bottlrneck(64,64,256,False),
-            Bottlrneck(256,64,256,False),
-            Bottlrneck(256,64,256,False),
-            #
-            Bottlrneck(256,128,512, True),
-            Bottlrneck(512,128,512, False),
-            Bottlrneck(512,128,512, False),
-            Bottlrneck(512,128,512, False),
-            #
-            Bottlrneck(512,256,1024, True),
-            Bottlrneck(1024,256,1024, False),
-            Bottlrneck(1024,256,1024, False),
-            Bottlrneck(1024,256,1024, False),
-            Bottlrneck(1024,256,1024, False),
-            Bottlrneck(1024,256,1024, False),
-            #
-            Bottlrneck(1024,512,2048, True),
-            Bottlrneck(2048,512,2048, False),
-            Bottlrneck(2048,512,2048, False),
-
-            torch.nn.AdaptiveAvgPool1d(1)
-        )
-        self.classifer = torch.nn.Sequential(
-            torch.nn.Linear(2048,classes)
-        )
-
-    def forward(self,x):
-        x = self.features(x)
-        x = x.view(-1,2048)
-        x = self.classifer(x)
-        return x
+#     def forward(self,x):
+#         if self.res_layer is not None:
+#             residual = self.res_layer(x)
+#         else:
+#             residual = x
+#         return self.layer(x)+residual
 
 
-# Initialize model, loss, and optimizer
-model = ResNet50(in_channels=1,classes=2)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+# class ResNet50(torch.nn.Module):
+#     def __init__(self,in_channels=2,classes=125):
+#         super(ResNet50, self).__init__()
+#         self.features = torch.nn.Sequential(
+#             torch.nn.Conv1d(in_channels,64,kernel_size=20,stride=1,padding=3),
+#             torch.nn.MaxPool1d(3,2,1),
+
+#             Bottlrneck(64,64,256,False),
+#             Bottlrneck(256,64,256,False),
+#             Bottlrneck(256,64,256,False),
+#             #
+#             Bottlrneck(256,128,512, True),
+#             Bottlrneck(512,128,512, False),
+#             Bottlrneck(512,128,512, False),
+#             Bottlrneck(512,128,512, False),
+#             #
+#             Bottlrneck(512,256,1024, True),
+#             Bottlrneck(1024,256,1024, False),
+#             Bottlrneck(1024,256,1024, False),
+#             Bottlrneck(1024,256,1024, False),
+#             Bottlrneck(1024,256,1024, False),
+#             Bottlrneck(1024,256,1024, False),
+#             #
+#             Bottlrneck(1024,512,2048, True),
+#             Bottlrneck(2048,512,2048, False),
+#             Bottlrneck(2048,512,2048, False),
+
+#             torch.nn.AdaptiveAvgPool1d(1)
+#         )
+#         self.classifer = torch.nn.Sequential(
+#             torch.nn.Linear(2048,classes)
+#         )
+
+#     def forward(self,x):
+#         x = self.features(x)
+#         x = x.view(-1,2048)
+#         x = self.classifer(x)
+#         return x
+
+
+# # Initialize model, loss, and optimizer
+# model = ResNet50(in_channels=1,classes=2)
+# criterion = nn.CrossEntropyLoss()
+# optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 #Lenet-5
 #Defining the convolutional neural network
@@ -154,37 +154,37 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 #Lenet-5
 #Defining the convolutional neural network
-# class LeNet5(nn.Module):
-#     def __init__(self, num_classes):
-#         super(LeNet5, self).__init__()
-#         self.layer1 = nn.Sequential(
-#             nn.Conv1d(1, 6, kernel_size=5, stride=1),  # Change the input channels from 3 to 1
-#             nn.ReLU(),
-#             nn.MaxPool1d(kernel_size=2, stride=2))
-#         self.layer2 = nn.Sequential(
-#             nn.Conv1d(6, 16, kernel_size=5, stride=1),
-#             nn.ReLU(),
-#             nn.MaxPool1d(kernel_size=2, stride=2))
-#         self.fc1 = nn.Linear(988*4, 120)  # Adjust the input size based on the output size of the last convolutional layer
-#         self.relu = nn.ReLU()
-#         self.fc2 = nn.Linear(120, 84)
-#         self.relu2 = nn.ReLU()
-#         self.fc3 = nn.Linear(84, num_classes)
+class LeNet5(nn.Module):
+    def __init__(self, num_classes):
+        super(LeNet5, self).__init__()
+        self.layer1 = nn.Sequential(
+            nn.Conv1d(1, 6, kernel_size=5, stride=1),  # Change the input channels from 3 to 1
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2, stride=2))
+        self.layer2 = nn.Sequential(
+            nn.Conv1d(6, 16, kernel_size=5, stride=1),
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2, stride=2))
+        self.fc1 = nn.Linear(988*4, 120)  # Adjust the input size based on the output size of the last convolutional layer
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(120, 84)
+        self.relu2 = nn.ReLU()
+        self.fc3 = nn.Linear(84, num_classes)
         
-#     def forward(self, x):
-#         out = self.layer1(x)
-#         out = self.layer2(out)
-#         out = out.view(out.size(0), -1)  # Reshape the output of the convolutional layers
-#         out = self.fc1(out)
-#         out = self.relu(out)
-#         out = self.fc2(out)
-#         out = self.relu2(out)
-#         out = self.fc3(out)
-#         return out
+    def forward(self, x):
+        out = self.layer1(x)
+        out = self.layer2(out)
+        out = out.view(out.size(0), -1)  # Reshape the output of the convolutional layers
+        out = self.fc1(out)
+        out = self.relu(out)
+        out = self.fc2(out)
+        out = self.relu2(out)
+        out = self.fc3(out)
+        return out
 
-# model = LeNet5(num_classes=2)
-# criterion = nn.CrossEntropyLoss()
-# optimizer = optim.Adam(model.parameters(), lr=0.001)
+model = LeNet5(num_classes=2)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 
 
@@ -344,9 +344,12 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     #plt.show()
     
     # Save the data of train, validation
-    # np.save(f'{model_name} {data_folder} {num_epochs} {num_validation_records} {num_records} train_loss_data.npy', train_loss_data)
-    # np.save(f'{model_name} {data_folder} {num_epochs} {num_validation_records} {num_records} train_accuracy_data.npy', train_accuracy_data)
-    # np.save(f'{model_name} {data_folder} {num_epochs} {num_validation_records} {num_records} validation_accuracy_data.npy', validation_accuracy_data)
+    data_to_compare_folder = "data-to-compare"
+    if not os.path.exists(data_to_compare_folder):
+        os.makedirs(data_to_compare_folder)
+    np.save(os.path.join(data_to_compare_folder, f"{model_scenario_name}train_loss_data.npy"), train_loss_data)
+    np.save(os.path.join(data_to_compare_folder, f"{model_scenario_name}train_accuracy_data.npy"), train_accuracy_data)
+    np.save(os.path.join(data_to_compare_folder, f"{model_scenario_name}validation_accuracy_data.npy"), validation_accuracy_data)
 
 
 
@@ -395,8 +398,8 @@ def run_dx_model(dx_model, record, signal, verbose):
     signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  # Add batch dimension
     #dx_model.eval()
     
-    #real_model = LeNet5(num_classes=2)
-    real_model = ResNet50(in_channels=1,classes=2)
+    real_model = LeNet5(num_classes=2)
+    #real_model = ResNet50(in_channels=1,classes=2)
     
     real_model.load_state_dict(dx_model)
     
