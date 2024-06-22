@@ -28,7 +28,7 @@ import numpy as np
 from torchvision import models
 ###############
 
-
+#########################################################################################################################3
 #Resnet50
 # class Bottlrneck(torch.nn.Module):
 #     def __init__(self,In_channel,Med_channel,Out_channel,downsample=False):
@@ -107,49 +107,84 @@ from torchvision import models
 # criterion = nn.CrossEntropyLoss()
 # optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-#Lenet-5
-#Defining the convolutional neural network
-# class LeNet5(nn.Module):
-#     def __init__(self, num_classes):
-#         super(LeNet5, self).__init__()
-#         self.layer1 = nn.Sequential(
-#             nn.Conv1d(1, 6, kernel_size=5, stride=1),
-#             nn.ReLU(),
-#             nn.MaxPool1d(kernel_size=2, stride=2))
-#         self.layer2 = nn.Sequential(
-#             nn.Conv1d(6, 16, kernel_size=5, stride=1),
-#             nn.ReLU(),
-#             nn.MaxPool1d(kernel_size=2, stride=2))
-        
-#         # Calculate the output size of layer2
-#         self._to_linear = None
-#         x = torch.randn(1, 1, 1000)  # Assuming input size of (1, 1000)
-#         self.convs(x)
-        
-#         self.fc1 = nn.Linear(self._to_linear, 120)  # Adjust input size based on the calculated value
-#         self.relu = nn.ReLU()
-#         self.fc2 = nn.Linear(120, 84)
-#         self.relu2 = nn.ReLU()
-#         self.fc3 = nn.Linear(84, num_classes)
-        
-#     def convs(self, x):
-#         x = self.layer1(x)
-#         x = self.layer2(x)
-#         if self._to_linear is None:
-#             self._to_linear = x[0].shape[0]*x[0].shape[1]
-#             print(self._to_linear)
-            
-#         return x
-        
-#     def forward(self, x):
-#         x = self.convs(x)
-#         x = x.view(-1, self._to_linear)
-#         x = self.fc1(x)
-#         x = self.relu(x)
-#         x = self.fc2(x)
-#         x = self.relu2(x)
-#         x = self.fc3(x)
-#         return x
+
+
+#######################################################################################################################################################3
+
+
+# Resnet18
+class BasicBlock1D(nn.Module):
+    expansion = 1
+
+    def __init__(self, in_planes, planes, stride=1):
+        super(BasicBlock1D, self).__init__()
+        self.conv1 = nn.Conv1d(in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
+        self.bn1 = nn.BatchNorm1d(planes)
+        self.conv2 = nn.Conv1d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm1d(planes)
+
+        self.shortcut = nn.Sequential()
+        if stride != 1 or in_planes != self.expansion * planes:
+            self.shortcut = nn.Sequential(
+                nn.Conv1d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
+                nn.BatchNorm1d(self.expansion * planes)
+            )
+
+    def forward(self, x):
+        out = torch.relu(self.bn1(self.conv1(x)))
+        out = self.bn2(self.conv2(out))
+        out += self.shortcut(x)
+        out = torch.relu(out)
+        return out
+
+# Define the ResNet architecture for 1D signals
+class ResNet1D(nn.Module):
+    def __init__(self, block, num_blocks, num_classes=10):
+        super(ResNet1D, self).__init__()
+        self.in_planes = 64
+
+        self.conv1 = nn.Conv1d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
+        self.bn1 = nn.BatchNorm1d(64)
+        self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1)
+        self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
+        self.linear = nn.Linear(512 * block.expansion, num_classes)
+
+    def _make_layer(self, block, planes, num_blocks, stride):
+        strides = [stride] + [1] * (num_blocks - 1)
+        layers = []
+        for stride in strides:
+            layers.append(block(self.in_planes, planes, stride))
+            self.in_planes = planes * block.expansion
+        return nn.Sequential(*layers)
+
+    def forward(self, x):
+        out = torch.relu(self.bn1(self.conv1(x)))
+        out = self.layer1(out)
+        out = self.layer2(out)
+        out = self.layer3(out)
+        out = self.layer4(out)
+        out = torch.nn.functional.avg_pool1d(out, out.size(2))
+        out = out.view(out.size(0), -1)
+        out = self.linear(out)
+        return out
+
+def ResNet18_1D(num_classes):
+    return ResNet1D(BasicBlock1D, [2, 2, 2, 2], num_classes)
+
+# Load the model, loss function, and optimizer
+model = ResNet18_1D(num_classes=2)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# Check if GPU is available and move the model to GPU
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = model.to(device)
+
+
+
+#################################################################################################################################
 
 
 #Lenet-5
@@ -186,9 +221,13 @@ model = LeNet5(num_classes=2)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
+# Check if GPU is available and move the model to GPU
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = model.to(device)
 
 
 
+##############################################################################################################################3
 
 
 
@@ -244,11 +283,12 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     
                 #SIGNAL and label load
                 signal, label = load_raw_data_ptbxl(100,record) #dang la lay lead 1, hoac lead 2 -> clear hon
+
                 #print("label loaded:", label)
 
                 #Prepare
-                signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
-                label_tensor = torch.tensor(label, dtype=torch.long)
+                signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
+                label_tensor = torch.tensor(label, dtype=torch.long).to(device)
             
                 optimizer.zero_grad()
                 outputs = model(signal_tensor)
@@ -291,8 +331,8 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
                     signal, label = load_raw_data_ptbxl(100,validation_record) #dang la lay lead 1, hoac lead 2 -> clear hon
                     #print("Validation label loaded:", label)
                     
-                    signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0) # Convert numpy array to tensor and add batch dimension
-                    label_tensor = torch.tensor(label, dtype=torch.long)
+                    signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
+                    label_tensor = torch.tensor(label, dtype=torch.long).to(device)
                     outputs = model(signal_tensor)
                     
                     _, predicted = torch.max(outputs, 1)
