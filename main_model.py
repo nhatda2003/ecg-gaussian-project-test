@@ -306,6 +306,18 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
         print(f"Validation Accuracy: {val_acc:.4f}")
         print()
         
+        #Check if train_accuracy too high:
+        # if Running_accuracy >0.99:
+        #     while len(train_loss_data) < num_epochs:
+        #         train_loss_data.append(-1)
+        #     while len(train_accuracy_data) < num_epochs:
+        #         train_accuracy_data.append(-1)
+        #     while len(validation_accuracy_data) < num_epochs:
+        #         validation_accuracy_data.append(-1)
+
+
+        #     break
+        
     os.makedirs(model_folder, exist_ok=True)
     
     # Save the model.
