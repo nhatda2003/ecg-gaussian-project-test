@@ -105,7 +105,7 @@ from torchvision import models
 # # Initialize model, loss, and optimizer
 # model = ResNet50(in_channels=1,classes=2)
 # criterion = nn.CrossEntropyLoss()
-# optimizer = optim.Adam(model.parameters(), lr=0.001)
+# optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 
 
@@ -176,7 +176,7 @@ def ResNet18_1D(num_classes):
 # Load the model, loss function, and optimizer
 model = ResNet18_1D(num_classes=2)
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # Check if GPU is available and move the model to GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
