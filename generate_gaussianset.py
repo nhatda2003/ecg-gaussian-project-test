@@ -32,7 +32,7 @@ def run(args):
 
 
     ###Generate parameter
-    number_of_virtual_signal = 5
+    number_of_virtual_signal = 10
     
 
     for i in range(num_records):

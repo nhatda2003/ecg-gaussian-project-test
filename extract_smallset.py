@@ -26,8 +26,10 @@ def run(args):
     width = len(str(num_records))
     
     #Set before generate
-    num_sets = 10
-    num_save = 500 #abnorm + norm = num_save 50n50a -> num_save = 100
+    num_sets = 3
+    num_norm = 1500
+    num_abnorm = 1500
+    num_save = num_norm + num_abnorm #abnorm + norm = num_save 50n50a -> num_save = 100
     
     if num_records == 0:
         raise FileNotFoundError('No data was provided.')

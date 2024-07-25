@@ -28,159 +28,80 @@ import numpy as np
 from torchvision import models
 ###############
 
-#########################################################################################################################3
-#Resnet50
-# class Bottlrneck(torch.nn.Module):
-#     def __init__(self,In_channel,Med_channel,Out_channel,downsample=False):
-#         super(Bottlrneck, self).__init__()
-#         self.stride = 1
-#         if downsample == True:
-#             self.stride = 2
-
-#         self.layer = torch.nn.Sequential(
-#             torch.nn.Conv1d(In_channel, Med_channel, 1, self.stride),
-#             torch.nn.BatchNorm1d(Med_channel),
-#             torch.nn.ReLU(),
-#             torch.nn.Conv1d(Med_channel, Med_channel, 3, padding=1),
-#             torch.nn.BatchNorm1d(Med_channel),
-#             torch.nn.ReLU(),
-#             torch.nn.Conv1d(Med_channel, Out_channel, 1),
-#             torch.nn.BatchNorm1d(Out_channel),
-#             torch.nn.ReLU(),
-#         )
-
-#         if In_channel != Out_channel:
-#             self.res_layer = torch.nn.Conv1d(In_channel, Out_channel,1,self.stride)
-#         else:
-#             self.res_layer = None
-
-#     def forward(self,x):
-#         if self.res_layer is not None:
-#             residual = self.res_layer(x)
-#         else:
-#             residual = x
-#         return self.layer(x)+residual
-
-
-# class ResNet50(torch.nn.Module):
-#     def __init__(self,in_channels=2,classes=125):
-#         super(ResNet50, self).__init__()
-#         self.features = torch.nn.Sequential(
-#             torch.nn.Conv1d(in_channels,64,kernel_size=20,stride=1,padding=3),
-#             torch.nn.MaxPool1d(3,2,1),
-
-#             Bottlrneck(64,64,256,False),
-#             Bottlrneck(256,64,256,False),
-#             Bottlrneck(256,64,256,False),
-#             #
-#             Bottlrneck(256,128,512, True),
-#             Bottlrneck(512,128,512, False),
-#             Bottlrneck(512,128,512, False),
-#             Bottlrneck(512,128,512, False),
-#             #
-#             Bottlrneck(512,256,1024, True),
-#             Bottlrneck(1024,256,1024, False),
-#             Bottlrneck(1024,256,1024, False),
-#             Bottlrneck(1024,256,1024, False),
-#             Bottlrneck(1024,256,1024, False),
-#             Bottlrneck(1024,256,1024, False),
-#             #
-#             Bottlrneck(1024,512,2048, True),
-#             Bottlrneck(2048,512,2048, False),
-#             Bottlrneck(2048,512,2048, False),
-
-#             torch.nn.AdaptiveAvgPool1d(1)
-#         )
-#         self.classifer = torch.nn.Sequential(
-#             torch.nn.Linear(2048,classes)
-#         )
-
-#     def forward(self,x):
-#         x = self.features(x)
-#         x = x.view(-1,2048)
-#         x = self.classifer(x)
-#         return x
-
-
-# # Initialize model, loss, and optimizer
-# model = ResNet50(in_channels=1,classes=2)
-# criterion = nn.CrossEntropyLoss()
-# optimizer = optim.Adam(model.parameters(), lr=0.0001)
-
 
 
 #######################################################################################################################################################3
 
 
 # Resnet18
-class BasicBlock1D(nn.Module):
-    expansion = 1
+# class BasicBlock1D(nn.Module):
+#     expansion = 1
 
-    def __init__(self, in_planes, planes, stride=1):
-        super(BasicBlock1D, self).__init__()
-        self.conv1 = nn.Conv1d(in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm1d(planes)
-        self.conv2 = nn.Conv1d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm1d(planes)
+#     def __init__(self, in_planes, planes, stride=1):
+#         super(BasicBlock1D, self).__init__()
+#         self.conv1 = nn.Conv1d(in_planes, planes, kernel_size=3, stride=stride, padding=1, bias=False)
+#         self.bn1 = nn.BatchNorm1d(planes)
+#         self.conv2 = nn.Conv1d(planes, planes, kernel_size=3, stride=1, padding=1, bias=False)
+#         self.bn2 = nn.BatchNorm1d(planes)
 
-        self.shortcut = nn.Sequential()
-        if stride != 1 or in_planes != self.expansion * planes:
-            self.shortcut = nn.Sequential(
-                nn.Conv1d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm1d(self.expansion * planes)
-            )
+#         self.shortcut = nn.Sequential()
+#         if stride != 1 or in_planes != self.expansion * planes:
+#             self.shortcut = nn.Sequential(
+#                 nn.Conv1d(in_planes, self.expansion * planes, kernel_size=1, stride=stride, bias=False),
+#                 nn.BatchNorm1d(self.expansion * planes)
+#             )
 
-    def forward(self, x):
-        out = torch.relu(self.bn1(self.conv1(x)))
-        out = self.bn2(self.conv2(out))
-        out += self.shortcut(x)
-        out = torch.relu(out)
-        return out
+#     def forward(self, x):
+#         out = torch.relu(self.bn1(self.conv1(x)))
+#         out = self.bn2(self.conv2(out))
+#         out += self.shortcut(x)
+#         out = torch.relu(out)
+#         return out
 
-# Define the ResNet architecture for 1D signals
-class ResNet1D(nn.Module):
-    def __init__(self, block, num_blocks, num_classes=10):
-        super(ResNet1D, self).__init__()
-        self.in_planes = 64
+# # Define the ResNet architecture for 1D signals
+# class ResNet1D(nn.Module):
+#     def __init__(self, block, num_blocks, num_classes=2):
+#         super(ResNet1D, self).__init__()
+#         self.in_planes = 64
 
-        self.conv1 = nn.Conv1d(1, 64, kernel_size=7, stride=2, padding=3, bias=False)
-        self.bn1 = nn.BatchNorm1d(64)
-        self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1)
-        self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
-        self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
-        self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
-        self.linear = nn.Linear(512 * block.expansion, num_classes)
+#         self.conv1 = nn.Conv1d(1, 64, kernel_size=32, stride=2, padding=3, bias=False)
+#         self.bn1 = nn.BatchNorm1d(64)
+#         self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1)
+#         self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
+#         self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
+#         self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
+#         self.linear = nn.Linear(512 * block.expansion, num_classes)
 
-    def _make_layer(self, block, planes, num_blocks, stride):
-        strides = [stride] + [1] * (num_blocks - 1)
-        layers = []
-        for stride in strides:
-            layers.append(block(self.in_planes, planes, stride))
-            self.in_planes = planes * block.expansion
-        return nn.Sequential(*layers)
+#     def _make_layer(self, block, planes, num_blocks, stride):
+#         strides = [stride] + [1] * (num_blocks - 1)
+#         layers = []
+#         for stride in strides:
+#             layers.append(block(self.in_planes, planes, stride))
+#             self.in_planes = planes * block.expansion
+#         return nn.Sequential(*layers)
 
-    def forward(self, x):
-        out = torch.relu(self.bn1(self.conv1(x)))
-        out = self.layer1(out)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = self.layer4(out)
-        out = torch.nn.functional.avg_pool1d(out, out.size(2))
-        out = out.view(out.size(0), -1)
-        out = self.linear(out)
-        return out
+#     def forward(self, x):
+#         out = torch.relu(self.bn1(self.conv1(x)))
+#         out = self.layer1(out)
+#         out = self.layer2(out)
+#         out = self.layer3(out)
+#         out = self.layer4(out)
+#         out = torch.nn.functional.avg_pool1d(out, out.size(2))
+#         out = out.view(out.size(0), -1)
+#         out = self.linear(out)
+#         return out
 
-def ResNet18_1D(num_classes):
-    return ResNet1D(BasicBlock1D, [2, 2, 2, 2], num_classes)
+# def ResNet18_1D(num_classes):
+#     return ResNet1D(BasicBlock1D, [2, 2, 2, 2], num_classes)
 
-# Load the model, loss function, and optimizer
-model = ResNet18_1D(num_classes=2)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.0001)
+# # Load the model, loss function, and optimizer
+# model = ResNet18_1D(num_classes=2)
+# criterion = nn.CrossEntropyLoss()
+# optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
-# Check if GPU is available and move the model to GPU
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = model.to(device)
+# # Check if GPU is available and move the model to GPU
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# model = model.to(device)
 
 
 
@@ -193,14 +114,14 @@ class LeNet5(nn.Module):
     def __init__(self, num_classes):
         super(LeNet5, self).__init__()
         self.layer1 = nn.Sequential(
-            nn.Conv1d(1, 6, kernel_size=5, stride=1),  # Change the input channels from 3 to 1
+            nn.Conv1d(1, 6, kernel_size=50, stride=1),  # Change the input channels from 3 to 1
             nn.ReLU(),
             nn.MaxPool1d(kernel_size=2, stride=2))
         self.layer2 = nn.Sequential(
             nn.Conv1d(6, 16, kernel_size=5, stride=1),
             nn.ReLU(),
             nn.MaxPool1d(kernel_size=2, stride=2))
-        self.fc1 = nn.Linear(988*4, 120)  # Adjust the input size based on the output size of the last convolutional layer
+        self.fc1 = nn.Linear(3760, 120)  # Adjust the input size based on the output size of the last convolutional layer
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(120, 84)
         self.relu2 = nn.ReLU()
@@ -262,7 +183,14 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
     #Set to train
     # model.train()
 
-    num_epochs = 30  # Tested to be stable
+    num_epochs = 10 #testing for x50
+
+    #num_epochs = 30 #testing for 50n50a
+    
+    #num_epochs = 20  # Testing for 250n250a
+    #num_epochs = 25  # Testing for 250n250a
+    
+    #num_epochs = 15 # for 2500n2500a
 
     # Outer loop for epochs
     for epoch in range(num_epochs):
@@ -436,7 +364,7 @@ def load_dx_model(model_folder, model_name, verbose):
 def run_dx_model(dx_model, record, signal, verbose):
   
     signal, label = load_raw_data_ptbxl(100, record)
-    print("label:", label)
+    #print("label:", label)
     
         #Test plot if need
     
@@ -448,12 +376,19 @@ def run_dx_model(dx_model, record, signal, verbose):
     # raise Exception("plot ok")
     
     signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  # Add batch dimension
+    signal_tensor = signal_tensor.to(device)
     #dx_model.eval()
     
+    
+    #Choose model
     real_model = LeNet5(num_classes=2)
+
     #real_model = ResNet50(in_channels=1,classes=2)
+    #real_model = ResNet18_1D(num_classes=2)
     
     real_model.load_state_dict(dx_model)
+    
+    real_model = real_model.to(device)
     
     # Perform inference
     with torch.no_grad():
@@ -461,13 +396,13 @@ def run_dx_model(dx_model, record, signal, verbose):
         #print(outputs)
        
         probabilities = torch.softmax(outputs, dim=1)
-        print(probabilities)
+        #print(probabilities)
         #raise Exception("Test out put")
         predicted_label_index = torch.argmax(probabilities, dim=1).item()
-        print("predicted output:",predicted_label_index,"!!")
+        #print("predicted output:",predicted_label_index,"!!")
         #raise Exception("Test out put")
-        predicted_label = 'Normal' if predicted_label_index == 0 else 'Abnormal'
-        print("predicted_label",predicted_label)
+        #redicted_label = 'Normal' if predicted_label_index == 0 else 'Abnormal'
+        #print("predicted_label",predicted_label)
 
     ##########################################################################
     #predicted_label = [predicted_label]

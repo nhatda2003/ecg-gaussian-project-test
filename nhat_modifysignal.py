@@ -17,7 +17,10 @@ def nhat_modify(signal, pause_idx=0):
         
         #Parameters edit
         mean = signal[i]
+        #std_dev = abs(signal[i]) * 0.03 #Luu y la std_dev phai la so duong
+        #std_dev = abs(signal[i]) * 0.05 #Luu y la std_dev phai la so duong
         std_dev = abs(signal[i]) * 0.07 #Luu y la std_dev phai la so duong
+        #std_dev = abs(signal[i]) * 0.09 #Luu y la std_dev phai la so duong
         modified[i] = generate_gaussian(mean, std_dev)
     
     return modified

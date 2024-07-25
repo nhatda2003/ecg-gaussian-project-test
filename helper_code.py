@@ -492,7 +492,7 @@ def compute_accuracy(labels, outputs):
         #print(tp,fp,fn,tn)
         #raise Exception("Tetsts")
         if 2 * tp + fp + fn > 0:
-            per_class_accuracy[k] = float(tp) / float(tp + tn + fp + fn)
+            per_class_accuracy[k] = float(tp) / float(tp + tn + fp + fn) #Cho nay bi sai perclass nhung ma all_acc van dung
         else:
             per_class_accuracy[k] = float('nan')
 
