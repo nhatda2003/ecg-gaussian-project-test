@@ -39,7 +39,7 @@ run_and_evaluate() {
     fi
 
     # Evaluate the model
-    python evaluate_model.py -d "$test_data" -o test_output"$test_data"-"$model_name" -s scores-lenet5kernel50-250n250a-g-7pt-x50.csv
+    python evaluate_model.py -d "$test_data" -o test_output"$test_data"-"$model_name" -s scores-lenet5kernel50-matrixprofile.csv
 
     # Check the exit status of the evaluation command
     if [ $? -ne 0 ]; then
@@ -113,16 +113,16 @@ declare -A model_names=(
     # ["50n50a-trainset10"]="lenet5-50n50a-trainset10"
 
 
-    # ["250n250a-trainset1"]="lenet5-250n250a-trainset1"
-    # ["250n250a-trainset2"]="lenet5-250n250a-trainset2"
-    # ["250n250a-trainset3"]="lenet5-250n250a-trainset3"
-    # ["250n250a-trainset4"]="lenet5-250n250a-trainset4"
-    # ["250n250a-trainset5"]="lenet5-250n250a-trainset5"
-    # ["250n250a-trainset6"]="lenet5-250n250a-trainset6"
-    # ["250n250a-trainset7"]="lenet5-250n250a-trainset7"
-    # ["250n250a-trainset8"]="lenet5-250n250a-trainset8"
-    # ["250n250a-trainset9"]="lenet5-250n250a-trainset9"
-    # ["250n250a-trainset10"]="lenet5-250n250a-trainset10"
+    ["250n250a-trainset1"]="lenet5-250n250a-trainset1"
+    ["250n250a-trainset2"]="lenet5-250n250a-trainset2"
+    ["250n250a-trainset3"]="lenet5-250n250a-trainset3"
+    ["250n250a-trainset4"]="lenet5-250n250a-trainset4"
+    ["250n250a-trainset5"]="lenet5-250n250a-trainset5"
+    ["250n250a-trainset6"]="lenet5-250n250a-trainset6"
+    ["250n250a-trainset7"]="lenet5-250n250a-trainset7"
+    ["250n250a-trainset8"]="lenet5-250n250a-trainset8"
+    ["250n250a-trainset9"]="lenet5-250n250a-trainset9"
+    ["250n250a-trainset10"]="lenet5-250n250a-trainset10"
 
     # ["250n250a-trainset1-g-3pt"]="lenet5-250n250a-trainset1-g-3pt"
     # ["250n250a-trainset2-g-3pt"]="lenet5-250n250a-trainset2-g-3pt"
@@ -179,16 +179,16 @@ declare -A model_names=(
     # ["250n250a-trainset9-g-5pt-x50"]="lenet5-250n250a-trainset9-g-5pt-x50"
     # ["250n250a-trainset10-g-5pt-x50"]="lenet5-250n250a-trainset10-g-5pt-x50"    
 
-    ["250n250a-trainset1-g-7pt-x50"]="lenet5-250n250a-trainset1-g-7pt-x50"
-    ["250n250a-trainset2-g-7pt-x50"]="lenet5-250n250a-trainset2-g-7pt-x50"
-    ["250n250a-trainset3-g-7pt-x50"]="lenet5-250n250a-trainset3-g-7pt-x50"
-    ["250n250a-trainset4-g-7pt-x50"]="lenet5-250n250a-trainset4-g-7pt-x50"
-    ["250n250a-trainset5-g-7pt-x50"]="lenet5-250n250a-trainset5-g-7pt-x50"
-    ["250n250a-trainset6-g-7pt-x50"]="lenet5-250n250a-trainset6-g-7pt-x50"
-    ["250n250a-trainset7-g-7pt-x50"]="lenet5-250n250a-trainset7-g-7pt-x50"
-    ["250n250a-trainset8-g-7pt-x50"]="lenet5-250n250a-trainset8-g-7pt-x50"
-    ["250n250a-trainset9-g-7pt-x50"]="lenet5-250n250a-trainset9-g-7pt-x50"
-    ["250n250a-trainset10-g-7pt-x50"]="lenet5-250n250a-trainset10-g-7pt-x50"    
+    # ["250n250a-trainset1-g-7pt-x50"]="lenet5-250n250a-trainset1-g-7pt-x50"
+    # ["250n250a-trainset2-g-7pt-x50"]="lenet5-250n250a-trainset2-g-7pt-x50"
+    # ["250n250a-trainset3-g-7pt-x50"]="lenet5-250n250a-trainset3-g-7pt-x50"
+    # ["250n250a-trainset4-g-7pt-x50"]="lenet5-250n250a-trainset4-g-7pt-x50"
+    # ["250n250a-trainset5-g-7pt-x50"]="lenet5-250n250a-trainset5-g-7pt-x50"
+    # ["250n250a-trainset6-g-7pt-x50"]="lenet5-250n250a-trainset6-g-7pt-x50"
+    # ["250n250a-trainset7-g-7pt-x50"]="lenet5-250n250a-trainset7-g-7pt-x50"
+    # ["250n250a-trainset8-g-7pt-x50"]="lenet5-250n250a-trainset8-g-7pt-x50"
+    # ["250n250a-trainset9-g-7pt-x50"]="lenet5-250n250a-trainset9-g-7pt-x50"
+    # ["250n250a-trainset10-g-7pt-x50"]="lenet5-250n250a-trainset10-g-7pt-x50"    
 
     # ["250n250aset1-g-3pt"]="lenet5-250n250aset1-g-3pt"
     # ["250n250aset2-g-3pt"]="lenet5-250n250aset2-g-3pt"
@@ -278,16 +278,16 @@ model_order=(
     # "50n50aset9-g-5pt"
     # "50n50aset10-g-5pt"
 
-    # "250n250a-trainset1"
-    # "250n250a-trainset2"
-    # "250n250a-trainset3"
-    # "250n250a-trainset4"
-    # "250n250a-trainset5"
-    # "250n250a-trainset6"
-    # "250n250a-trainset7"
-    # "250n250a-trainset8"
-    # "250n250a-trainset9"
-    # "250n250a-trainset10"
+    "250n250a-trainset1"
+    "250n250a-trainset2"
+    "250n250a-trainset3"
+    "250n250a-trainset4"
+    "250n250a-trainset5"
+    "250n250a-trainset6"
+    "250n250a-trainset7"
+    "250n250a-trainset8"
+    "250n250a-trainset9"
+    "250n250a-trainset10"
 
     # "250n250a-trainset1-g-3pt"
     # "250n250a-trainset2-g-3pt"
@@ -355,16 +355,16 @@ model_order=(
     # "250n250a-trainset9-g-5pt-x50"
     # "250n250a-trainset10-g-5pt-x50"
 
-    "250n250a-trainset1-g-7pt-x50"
-    "250n250a-trainset2-g-7pt-x50"
-    "250n250a-trainset3-g-7pt-x50"
-    "250n250a-trainset4-g-7pt-x50"
-    "250n250a-trainset5-g-7pt-x50"
-    "250n250a-trainset6-g-7pt-x50"
-    "250n250a-trainset7-g-7pt-x50"
-    "250n250a-trainset8-g-7pt-x50"
-    "250n250a-trainset9-g-7pt-x50"
-    "250n250a-trainset10-g-7pt-x50"
+    # "250n250a-trainset1-g-7pt-x50"
+    # "250n250a-trainset2-g-7pt-x50"
+    # "250n250a-trainset3-g-7pt-x50"
+    # "250n250a-trainset4-g-7pt-x50"
+    # "250n250a-trainset5-g-7pt-x50"
+    # "250n250a-trainset6-g-7pt-x50"
+    # "250n250a-trainset7-g-7pt-x50"
+    # "250n250a-trainset8-g-7pt-x50"
+    # "250n250a-trainset9-g-7pt-x50"
+    # "250n250a-trainset10-g-7pt-x50"
 
 
     # "250n250aset1-g-3pt"

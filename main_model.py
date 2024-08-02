@@ -24,8 +24,12 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
+import torch.nn.functional as F 
 import numpy as np
+
 from torchvision import models
+
+import matrixprofile
 ###############
 
 
@@ -107,37 +111,80 @@ from torchvision import models
 
 #################################################################################################################################
 
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# #Lenet-5-2D
+# #Defining the convolutional neural network
+# class LeNet5(nn.Module):
+#     def __init__(self, num_classes):
+#         super(LeNet5, self).__init__()
+#         self.layer1 = nn.Sequential(
+#             nn.Conv2d(1, 6, kernel_size=5, stride=1, padding=0),
+#             nn.BatchNorm2d(6),
+#             nn.ReLU(),
+#             nn.MaxPool2d(kernel_size=2, stride=2))
+#         self.layer2 = nn.Sequential(
+#             nn.Conv2d(6, 16, kernel_size=5, stride=1, padding=0),
+#             nn.BatchNorm2d(16),
+#             nn.ReLU(),
+#             nn.MaxPool2d(kernel_size=2, stride=2))
 
-#Lenet-5
+#         # Adaptive pooling layer to standardize the output size
+#         self.adaptive_pool = nn.AdaptiveAvgPool2d((7, 7))  # output size of 7x7
+
+#         # Fully connected layers
+#         self.fc = nn.Linear(16 * 7 * 7, 120)  # Size must match the output of adaptive pool
+#         self.fc1 = nn.Linear(120, 84)
+#         self.fc2 = nn.Linear(84, num_classes)
+
+#     def forward(self, x):
+#         out = self.layer1(x)
+#         out = self.layer2(out)
+#         out = self.adaptive_pool(out)
+#         out = out.view(out.size(0), -1)  # Flatten the tensor
+#         out = F.relu(self.fc(out))
+#         out = F.relu(self.fc1(out))
+#         out = self.fc2(out)
+#         return out
+    
+# model = LeNet5(num_classes=2)
+# criterion = nn.CrossEntropyLoss()
+# optimizer = optim.Adam(model.parameters(), lr=0.0001)
+
+# # Check if GPU is available and move the model to GPU
+
+# model = model.to(device)
+
+
+
+##############################################################################################################################3
+#Lenet-5-1D
 #Defining the convolutional neural network
 class LeNet5(nn.Module):
     def __init__(self, num_classes):
         super(LeNet5, self).__init__()
         self.layer1 = nn.Sequential(
-            nn.Conv2d(1, 6, kernel_size=5, stride=1, padding=0),
-            nn.BatchNorm2d(6),
+            nn.Conv1d(1, 6, kernel_size=50, stride=1),  # Change the input channels from 3 to 1
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride = 2))
+            nn.MaxPool1d(kernel_size=2, stride=2))
         self.layer2 = nn.Sequential(
-            nn.Conv2d(6, 16, kernel_size=5, stride=1, padding=0),
-            nn.BatchNorm2d(16),
+            nn.Conv1d(6, 16, kernel_size=5, stride=1),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size = 2, stride = 2))
-        self.fc = nn.Linear(400, 120)
+            nn.MaxPool1d(kernel_size=2, stride=2))
+        self.fc1 = nn.Linear(3696, 120)  # Adjust the input size based on the output size of the last convolutional layer
         self.relu = nn.ReLU()
-        self.fc1 = nn.Linear(120, 84)
-        self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(84, num_classes)
+        self.fc2 = nn.Linear(120, 84)
+        self.relu2 = nn.ReLU()
+        self.fc3 = nn.Linear(84, num_classes)
         
     def forward(self, x):
         out = self.layer1(x)
         out = self.layer2(out)
-        out = out.reshape(out.size(0), -1)
-        out = self.fc(out)
-        out = self.relu(out)
+        out = out.view(out.size(0), -1)  # Reshape the output of the convolutional layers
         out = self.fc1(out)
-        out = self.relu1(out)
+        out = self.relu(out)
         out = self.fc2(out)
+        out = self.relu2(out)
+        out = self.fc3(out)
         return out
 
 model = LeNet5(num_classes=2)
@@ -147,11 +194,6 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 # Check if GPU is available and move the model to GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
-
-
-
-##############################################################################################################################3
-
 
 
 
@@ -216,10 +258,21 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
 
                 #print("label loaded:", label)
 
-                #Prepare
-                signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
+                #Prepare for 1D
+                stomp = matrixprofile.algorithms.stomp(signal, 20)['mp']
+                #print(np.shape(stomp))
+                signal_tensor = torch.tensor(stomp, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
                 label_tensor = torch.tensor(label, dtype=torch.long).to(device)
             
+                #Prepare for 2D
+                #signal_tensor = matrixprofile.compute(signal,preprocessing_kwargs={'window':20})
+                #print(signal_tensor['pmp'])
+                # pmp = matrixprofile.compute(signal,preprocessing_kwargs={'window':50})['pmp']
+                # print(np.shape(pmp))
+                # signal_tensor = torch.tensor(pmp, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+                # label_tensor = torch.tensor(label, dtype=torch.long).to(device)
+                
+
                 optimizer.zero_grad()
                 outputs = model(signal_tensor)
                 loss = criterion(outputs, label_tensor.unsqueeze(0))  # Add batch dimension to target for the loss function
@@ -261,8 +314,17 @@ def train_dx_model(data_folder, validation_folder, model_folder, model_scenario_
                     signal, label = load_raw_data_ptbxl(100,validation_record) #dang la lay lead 1, hoac lead 2 -> clear hon
                     #print("Validation label loaded:", label)
                     
-                    signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
+                    #For 1-D
+                    stomp = matrixprofile.algorithms.stomp(signal, 20)['mp']
+                    signal_tensor = torch.tensor(stomp, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device) # Convert numpy array to tensor and add batch dimension
                     label_tensor = torch.tensor(label, dtype=torch.long).to(device)
+                    
+                    #For 2-D
+                    # pmp = matrixprofile.compute(signal,preprocessing_kwargs={'window':20})['pmp']
+                    # signal_tensor = torch.tensor(pmp, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+                    # label_tensor = torch.tensor(label, dtype=torch.long).to(device)
+                    
+                    
                     outputs = model(signal_tensor)
                     
                     _, predicted = torch.max(outputs, 1)
@@ -377,19 +439,26 @@ def run_dx_model(dx_model, record, signal, verbose):
     # plt.show()
     # raise Exception("plot ok")
     
-    signal_tensor = torch.tensor(signal, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  # Add batch dimension
+    #Prepare for 1D    
+    stomp = matrixprofile.algorithms.stomp(signal, 20)['mp']
+    signal_tensor = torch.tensor(stomp, dtype=torch.float32).unsqueeze(0).unsqueeze(0)  # Add batch dimension
     signal_tensor = signal_tensor.to(device)
-    #dx_model.eval()
+
     
+    #Prepare for 2D
+    #signal_tensor = matrixprofile.compute(signal,preprocessing_kwargs={'window':20})
+    #print(signal_tensor['pmp'])
+    # pmp = matrixprofile.compute(signal,preprocessing_kwargs={'window':20})['pmp']
+    # signal_tensor = torch.tensor(pmp, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+    # label_tensor = torch.tensor(label, dtype=torch.long).to(device)
+
     
     #Choose model
     real_model = LeNet5(num_classes=2)
-
     #real_model = ResNet50(in_channels=1,classes=2)
     #real_model = ResNet18_1D(num_classes=2)
     
     real_model.load_state_dict(dx_model)
-    
     real_model = real_model.to(device)
     
     # Perform inference
